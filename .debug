@@ -4,17 +4,5 @@
         <HostList>
             <Host Name="ILST" Port="4467" />
         </HostList>
-    </Extension><Extension Id="com.hyperion.panel">
-        <HostList>
-            <Host Name="AEFT" Port="4468" />
-        </HostList>
-    </Extension><Extension Id="com.hyperion.panel">
-        <HostList>
-            <Host Name="PHXS" Port="4469" />
-        </HostList>
-    </Extension><Extension Id="com.hyperion.panel">
-        <HostList>
-            <Host Name="PPRO" Port="4470" />
-        </HostList>
     </Extension>
 </ExtensionList>

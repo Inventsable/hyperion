@@ -13,6 +13,47 @@ export default {
   data: () => ({
     selected: ``,
     ignore: /^\.|node_modules/,
+    rx: {
+      fileExt: /\.[\w]*$/,
+      lastFolder: /\/[^\/]*(\/)?$/
+    },
+    extIcons: {
+      unknown: "mdi-file-question",
+      html: "mdi-language-html5",
+      jsx: "mdi-nodejs",
+      js: "mdi-nodejs",
+      svg: "mdi-svg",
+      gitignore: "mdi-file-cancel",
+      debug: "mdi-file-search",
+      ai: "mdi-file-image",
+      ico: "mdi-file-image",
+      gif: "mdi-file-video",
+      psd: "mdi-file-image",
+      aep: "mdi-file-video",
+      prproj: "mdi-file-video",
+      json: "mdi-json",
+      babelrc: "mdi-nodejs",
+      eslintignore: "mdi-nodejs",
+      editorconfig: "mdi-nodejs",
+      css: "mdi-language-css3",
+      md: "mdi-markdown",
+      xml: "mdi-json",
+      pdf: "mdi-file-pdf",
+      png: "mdi-file-image",
+      txt: "mdi-file-document-outline",
+      xls: "mdi-file-excel",
+      pkf: "mdi-file-music",
+      wav: "mdi-file-music",
+      mp3: "mdi-file-music",
+      vue: "mdi-vuejs",
+      nojekyll: "mdi-file-nodejs",
+      ts: "mdi-language-typescript",
+      sesx: "mdi-file-music",
+      ssml: "mdi-file-music",
+      npmignore: "mdi-file-cancel",
+      browserslistrc: "mdi-web",
+      yml: "mdi-web"
+    },
     // simple: [
     //   {
     //     label: "root",
@@ -116,11 +157,20 @@ export default {
     constructFile(root, children) {
       return children.map(child => {
         return {
-          icon: "mdi-file",
+          icon: this.getFileIcon(child),
           label: child,
           path: path.resolve(`${root}/${child}`)
         };
       });
+    },
+    getFileIcon(child) {
+      let match = child.match(/\.[\w]*$/);
+      let ext = match[0].substr(1);
+      if (ext in this.extIcons) {
+        return this.extIcons[ext];
+      } else {
+        return "mdi-file";
+      }
     },
     async readDir(thispath) {
       return new Promise((resolve, reject) => {

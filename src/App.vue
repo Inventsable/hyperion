@@ -32,6 +32,7 @@ export default {
     isMounted: false,
     spy: null,
     menus: null,
+    paths: [spy.path.root],
     selected: "",
     // optional
     modal: null,

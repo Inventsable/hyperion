@@ -9,44 +9,11 @@
     </q-header>
 
     <q-footer>
-      <q-bar>
-        <q-btn dense flat @click="" :icon="`mdi-home`">
-          <tooltipper msg="Test" />
-        </q-btn>
+      <q-bar class="q-pl-sm">
+        <q-btn dense flat @click="newFolder" :icon="`mdi-folder-plus`" />
+        <q-btn dense flat @click="newFile" :icon="`mdi-content-save`" />
+        <!-- <tooltipper msg="Add new" /> -->
         <q-space></q-space>
-        <q-btn-dropdown
-          auto-close
-          dense
-          flat
-          color="primary"
-          :icon="'mdi-format-vertical-align-top'"
-          dropdown-icon
-        >
-          <q-btn
-            dense
-            flat
-            @click=""
-            icon="mdi-format-vertical-align-top"
-            :style="isActiveStyle(true)"
-          />
-          <q-btn
-            dense
-            flat
-            @click=""
-            icon="mdi-format-vertical-align-center"
-            :style="isActiveStyle(false)"
-          />
-          <q-btn
-            dense
-            flat
-            @click=""
-            icon="mdi-format-vertical-align-bottom"
-            :style="isActiveStyle(false)"
-          />
-        </q-btn-dropdown>
-        <q-btn dense flat @click="" :icon="`mdi-eye`">
-          <tooltipper msg="Test" />
-        </q-btn>
       </q-bar>
     </q-footer>
 
@@ -60,6 +27,9 @@
 import { mapGetters, mapActions } from "vuex";
 import getExtVersion from "src/utils/main/getExtVersion";
 
+// Importing standalone functions here:
+import { openDialog, saveDialog } from "cluecumber";
+
 export default {
   name: "MyLayout",
   components: {
@@ -69,7 +39,8 @@ export default {
   },
   data: () => ({}),
   mounted() {
-    console.log("Panel");
+    console.log("Hello?");
+    console.log(this.$route);
   },
   computed: {
     ...mapGetters("settings", ["settings"]),
@@ -105,6 +76,14 @@ export default {
       return `
         color: var(--color-${state ? "selection" : "default"});
       `;
+    },
+    newFolder() {
+      let path = openDialog(`Select folder to watch`);
+      console.log(path);
+    },
+    newFile() {
+      let path = saveDialog(`Save new file`, ["ai"]);
+      console.log(path);
     }
   }
 };
@@ -114,7 +93,7 @@ export default {
 .q-layout__section--marginal {
   user-select: none;
   cursor: default;
-  background-color: var(--color-header-border);
+  background-color: var(--color-header);
 }
 
 @media screen and (max-width: 260px) {

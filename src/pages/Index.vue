@@ -1,9 +1,16 @@
 <template>
   <q-pull-to-refresh style="height: 100%;" @refresh="refresh">
     <q-page>
-      <div class="tree-wrapper q-pa-md q-gutter-sm">
-        <file-tree :root="path" />
+      <div v-if="paths.length" class="tree-wrapper q-pa-md q-gutter-sm">
+        <file-tree v-for="(path, i) in paths" :key="i" :root="path" />
         <!-- <q-btn dense flat @click="" :icon="`mdi-close`"> </q-btn> -->
+      </div>
+      <div v-else class="fixed-center text-center">
+        <p>
+          <sadface />
+        </p>
+        <p class="text-faded">Sorry, nothing here...<strong>(404)</strong></p>
+        <q-btn color="secondary" style="width:200px;" to="/" label="Go back" />
       </div>
     </q-page>
   </q-pull-to-refresh>
@@ -16,10 +23,11 @@ import spy from "cep-spy";
 export default {
   components: {
     "quasar-logo": require("src/assets/quasarLogo.vue").default,
-    "file-tree": require("src/components/Filetree.vue").default
+    "file-tree": require("src/components/Filetree.vue").default,
+    sadface: require("src/assets/sadLogo.vue").default
   },
   data: () => ({
-    path: spy.path.root
+    // paths: [spy.path.root]
   }),
   computed: {
     ...mapGetters("settings", ["settings"]),
@@ -28,6 +36,9 @@ export default {
     },
     size() {
       return this.settings.size;
+    },
+    paths() {
+      return this.app.paths;
     }
   },
   async mounted() {
